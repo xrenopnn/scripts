@@ -67,7 +67,3 @@ on property:vendor.sys.usb.udc_bind=*
 
 on property:vendor.thermal.mode=perf
    write /sys/block/${dev.mnt.rootdisk.data}/queue/scheduler mq-deadline
-
-
-
-
