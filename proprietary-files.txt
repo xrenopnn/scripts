@@ -37,3 +37,4 @@ service vendor.stflashtool /vendor/bin/STFlashTool -c /vendor/etc/st21nfc_conf.t
 	user nfc
 	oneshot
 	disabled
+
