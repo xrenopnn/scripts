@@ -1,4 +1,3 @@
-# WiFi Display
 system/framework/WfdCommon.jar;BOOT_JAR
 system_ext/bin/wfdservice64
 system_ext/etc/init/wfdservice.rc
