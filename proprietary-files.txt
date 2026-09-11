@@ -7,17 +7,18 @@ ro.product.system_ext.device=msi
 ro.product.system_ext.manufacturer=motorola
 ro.product.system_ext.model=moto g57
 ro.product.system_ext.name=mumba_g
-ro.system_ext.build.date=Mon Jun 29 10:58:18 EDT 2026
-ro.system_ext.build.date.utc=1782745098
-ro.system_ext.build.fingerprint=motorola/mumba_g/msi:16/W1WAAS36M.48-12-ST12.1/c557f6:user/release-keys
-ro.system_ext.build.id=W1WAAS36M.48-12-ST12.1
+ro.system_ext.build.date=Fri Aug 14 14:04:44 CDT 2026
+ro.system_ext.build.date.utc=1786734284
+ro.system_ext.build.fingerprint=motorola/mumba_g/msi:17/A171WAAM-A171-ST2.1/221d7:user/release-keys
+ro.system_ext.build.id=A171WAAM-A171-ST2.1
+ro.system_ext.build.uuid=QQE7hHJdiZV8GqqS2BJbc5Q0tf5vljCBq3SzrBGNUs4
 ro.system_ext.build.tags=release-keys
 ro.system_ext.build.type=user
-ro.system_ext.build.version.incremental=c557f6
-ro.system_ext.build.version.release=16
-ro.system_ext.build.version.release_or_codename=16
-ro.system_ext.build.version.sdk=36
-ro.system_ext.build.version.sdk_full=36.0
+ro.system_ext.build.version.incremental=221d7
+ro.system_ext.build.version.release=17
+ro.system_ext.build.version.release_or_codename=17
+ro.system_ext.build.version.sdk=37
+ro.system_ext.build.version.sdk_full=37.0
 ####################################
 # from variable PRODUCT_SYSTEM_EXT_PROPERTIES
 ####################################
@@ -39,6 +40,8 @@ persist.bluetooth.leaudio.bypass_allow_list=false
 bluetooth.leaudio.dual_bidirection_swb.supported=true
 persist.bluetooth.leaudio.notify.idle.during.call=true
 persist.vendor.bluetooth.haltest=true
+bluetooth.a2dp.source.lhdcv5_priority.config=10003
+bluetooth.avrcp.target.safe_media_volume.config=10
 bluetooth.hfp.codec_aptx_voice.enabled=false
 bluetooth.hfp.swb.aptx.power_management.enabled=false
 persist.vendor.dpm.feature=11
@@ -64,6 +67,6 @@ media.recorder.show_manufacturer_and_model=true
 vendor.audio.parser.ip.buffer.size=262144
 persist.vendor.audio_fx.current=mmi
 vendor.audio.snd_card.open.retries=50
-ro.mot.platform.build_id=MW-274
+ro.mot.platform.build_id=MW-514
 # end of file
 
