@@ -1,93 +1,36 @@
-From 64ca91f0197107b383f6e45f34046e37745a4107 Mon Sep 17 00:00:00 2001
-From: zaraknyu <razenxizu@gmail.com>
-Date: Fri, 11 Sep 2026 21:00:30 +0000
-Subject: [PATCH 4/4] [PATCH 4/4] ims: globally set RECEIVER_EXPORTED for
- registerReceiver
+From 874d4beb5ff028c1ad33f4835d76c218bec12d66 Mon Sep 17 00:00:00 2001
+From: Erfan Abdi <erfangplus@gmail.com>
+Date: Sun, 26 Jan 2020 20:23:44 +0330
+Subject: [PATCH 1/4] ImsConfigImpl: Return 0 in getWfcMDN in any case
 
-E AndroidRuntime: FATAL EXCEPTION: main
-E AndroidRuntime: Process: org.codeaurora.ims, PID: 3692
-E AndroidRuntime: java.lang.RuntimeException: Unable to create service org.codeaurora.ims.ImsService: java.lang.SecurityException: org.codeaurora.ims: One of RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED should be specified when a receiver isn't being registered exclusively for system broadcasts
-
-Co-authored-by: Cosmin Tanislav <demonsingur@gmail.com>
-Signed-off-by: zaraknyu <razenxizu@gmail.com>
 ---
- smali/com/qualcomm/ims/vt/LowBatteryHandler.smali  | 6 ++++--
- smali/org/codeaurora/ims/ImsCallModification.smali | 6 ++++--
- smali/org/codeaurora/ims/ImsSubController.smali    | 6 ++++--
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ smali/org/codeaurora/ims/ImsConfigImpl.smali | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/smali/com/qualcomm/ims/vt/LowBatteryHandler.smali b/smali/com/qualcomm/ims/vt/LowBatteryHandler.smali
-index 1b5620a..4bb8114 100644
---- a/smali/com/qualcomm/ims/vt/LowBatteryHandler.smali
-+++ b/smali/com/qualcomm/ims/vt/LowBatteryHandler.smali
-@@ -96,7 +96,7 @@
+diff --git a/smali/org/codeaurora/ims/ImsConfigImpl.smali b/smali/org/codeaurora/ims/ImsConfigImpl.smali
+index eca7e56..3a02838 100644
+--- a/smali/org/codeaurora/ims/ImsConfigImpl.smali
++++ b/smali/org/codeaurora/ims/ImsConfigImpl.smali
+@@ -1361,20 +1361,8 @@
+     .locals 2
+ 
+     .line 850
+-    const-string v0, "wfc_ims_mdn"
+-
+-    iget-object v1, p0, Lorg/codeaurora/ims/ImsConfigImpl;->mContext:Landroid/content/Context;
+-
+-    invoke-virtual {p0, p1, v0, v1}, Lorg/codeaurora/ims/ImsConfigImpl;->getSubscriptionProperty(ILjava/lang/String;Landroid/content/Context;)Ljava/lang/String;
+-
+-    move-result-object p0
+-
+-    if-nez p0, :cond_0
+-
+-    .line 852
+     const-string p0, "0"
+ 
+-    :cond_0
+     return-object p0
  .end method
  
- .method private constructor <init>(Ljava/util/List;Landroid/content/Context;)V
--    .locals 1
-+    .locals 2
-     .annotation system Ldalvik/annotation/Signature;
-         value = {
-             "(",
-@@ -143,7 +143,9 @@
- 
-     invoke-direct {p0, p1}, Landroid/content/IntentFilter;-><init>(Ljava/lang/String;)V
- 
--    invoke-virtual {p2, v0, p0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
-+    const/4 v1, 0x2
-+
-+    invoke-virtual {p2, v0, p0, v1}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;I)Landroid/content/Intent;
- 
-     return-void
- .end method
-diff --git a/smali/org/codeaurora/ims/ImsCallModification.smali b/smali/org/codeaurora/ims/ImsCallModification.smali
-index 128f82c..a9a047e 100644
---- a/smali/org/codeaurora/ims/ImsCallModification.smali
-+++ b/smali/org/codeaurora/ims/ImsCallModification.smali
-@@ -175,7 +175,7 @@
- .end method
- 
- .method public constructor <init>(Lorg/codeaurora/ims/ImsCallSessionImpl;Landroid/content/Context;Lorg/codeaurora/ims/ImsSenderRxr;Landroid/os/Looper;)V
--    .locals 3
-+    .locals 4
- 
-     .line 136
-     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
-@@ -342,7 +342,9 @@
-     .line 149
-     iget-object p2, p0, Lorg/codeaurora/ims/ImsCallModification;->mContext:Landroid/content/Context;
- 
--    invoke-virtual {p2, v0, p1}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
-+    const/4 v1, 0x2
-+
-+    invoke-virtual {p2, v0, p1, v1}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;I)Landroid/content/Intent;
- 
-     .line 150
-     const-string p1, "Registering car mode receiver"
-diff --git a/smali/org/codeaurora/ims/ImsSubController.smali b/smali/org/codeaurora/ims/ImsSubController.smali
-index f237166..0f3e678 100644
---- a/smali/org/codeaurora/ims/ImsSubController.smali
-+++ b/smali/org/codeaurora/ims/ImsSubController.smali
-@@ -304,7 +304,7 @@
- .end method
- 
- .method public constructor <init>(Landroid/content/Context;Ljava/util/List;Ljava/util/List;Landroid/os/Looper;)V
--    .locals 3
-+    .locals 5
-     .annotation system Ldalvik/annotation/Signature;
-         value = {
-             "(",
-@@ -409,7 +409,9 @@
- 
-     invoke-direct {v1, v2}, Landroid/content/IntentFilter;-><init>(Ljava/lang/String;)V
- 
--    invoke-virtual {p1, v0, v1}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
-+    const/4 v2, 0x2
-+
-+    invoke-virtual {p1, v0, v1, v2}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;I)Landroid/content/Intent;
- 
-     .line 209
-     iput-object p2, p0, Lorg/codeaurora/ims/ImsSubController;->mSenderRxrs:Ljava/util/List;
 -- 
 2.43.0
-
