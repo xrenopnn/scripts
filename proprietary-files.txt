@@ -1,23 +1,22 @@
-From 64ca91f0197107b383f6e45f34046e37745a4107 Mon Sep 17 00:00:00 2001
-From: zaraknyu <razenxizu@gmail.com>
-Date: Fri, 11 Sep 2026 21:00:30 +0000
-Subject: [PATCH] [PATCH 4/4] ims: globally set RECEIVER_EXPORTED for
- registerReceiver
+From 579b51255c5f03f1b6c384cb74affd1c260bcf7a Mon Sep 17 00:00:00 2001
+From: SGCMarkus <markusornik@gmail.com>
+Date: Wed, 21 Feb 2024 19:18:49 +0100
+Subject: [PATCH 4/4] ims: globally set RECEIVER_EXPORTED for registerReceiver
 
 E AndroidRuntime: FATAL EXCEPTION: main
 E AndroidRuntime: Process: org.codeaurora.ims, PID: 3692
 E AndroidRuntime: java.lang.RuntimeException: Unable to create service org.codeaurora.ims.ImsService: java.lang.SecurityException: org.codeaurora.ims: One of RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED should be specified when a receiver isn't being registered exclusively for system broadcasts
 
 Co-authored-by: Cosmin Tanislav <demonsingur@gmail.com>
-Signed-off-by: zaraknyu <razenxizu@gmail.com>
 ---
  smali/com/qualcomm/ims/vt/LowBatteryHandler.smali  | 6 ++++--
  smali/org/codeaurora/ims/ImsCallModification.smali | 6 ++++--
+ smali/org/codeaurora/ims/ImsServiceSub.smali       | 6 ++++--
  smali/org/codeaurora/ims/ImsSubController.smali    | 6 ++++--
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ 4 files changed, 16 insertions(+), 8 deletions(-)
 
 diff --git a/smali/com/qualcomm/ims/vt/LowBatteryHandler.smali b/smali/com/qualcomm/ims/vt/LowBatteryHandler.smali
-index 1b5620a..4bb8114 100644
+index 1b5620a..4c01e39 100644
 --- a/smali/com/qualcomm/ims/vt/LowBatteryHandler.smali
 +++ b/smali/com/qualcomm/ims/vt/LowBatteryHandler.smali
 @@ -96,7 +96,7 @@
@@ -41,7 +40,7 @@ index 1b5620a..4bb8114 100644
      return-void
  .end method
 diff --git a/smali/org/codeaurora/ims/ImsCallModification.smali b/smali/org/codeaurora/ims/ImsCallModification.smali
-index 128f82c..a9a047e 100644
+index 128f82c..efee0fe 100644
 --- a/smali/org/codeaurora/ims/ImsCallModification.smali
 +++ b/smali/org/codeaurora/ims/ImsCallModification.smali
 @@ -175,7 +175,7 @@
@@ -64,8 +63,9 @@ index 128f82c..a9a047e 100644
  
      .line 141
      const-string p1, "Registering car mode receiver"
+
 diff --git a/smali/org/codeaurora/ims/ImsSubController.smali b/smali/org/codeaurora/ims/ImsSubController.smali
-index f237166..0f3e678 100644
+index f237166..974f67f 100644
 --- a/smali/org/codeaurora/ims/ImsSubController.smali
 +++ b/smali/org/codeaurora/ims/ImsSubController.smali
 @@ -304,7 +304,7 @@
@@ -90,4 +90,3 @@ index f237166..0f3e678 100644
      iput-object p2, p0, Lorg/codeaurora/ims/ImsSubController;->mSenderRxrs:Ljava/util/List;
 -- 
 2.43.0
-
