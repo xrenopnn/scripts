@@ -50,7 +50,6 @@ SPDX-License-Identifier: BSD-3-Clause-Clear
             <profile samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000" channelLayouts="LAYOUT_STEREO LAYOUT_MONO" formatType="NON_PCM" encoding="audio/aac-adts.02" />
             <profile samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000" channelLayouts="LAYOUT_STEREO LAYOUT_MONO" formatType="NON_PCM" encoding="audio/aac-adts.05" />
             <profile samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000" channelLayouts="LAYOUT_STEREO LAYOUT_MONO" formatType="NON_PCM" encoding="audio/aac-adts.29" />
-            <profile samplingRates="8000 12000 16000 24000 48000" channelLayouts="LAYOUT_STEREO LAYOUT_MONO" formatType="NON_PCM" encoding="audio/opus" />
         </mixPort>
 
         <mixPort name="voice_tx" role="source">
@@ -118,10 +117,7 @@ SPDX-License-Identifier: BSD-3-Clause-Clear
         <devicePort tagName="telephony_tx" deviceType="OUT_TELEPHONY_TX" role="sink" attached="true">
             <profile samplingRates="8000 16000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
         </devicePort>
-        <!-- Todo check the sanity of below later w.r.t channel layouts -->
-        <devicePort tagName="hdmi_out" deviceType="OUT_DEVICE" connection="hdmi" role="sink">
-            <profile samplingRates="8000 11025 16000 22050 32000 44100 48000 64000 88200 96000 128000 176400 192000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
-        </devicePort>
+
         <!-- Todo check the sanity of below later w.r.t channel layouts -->
         <devicePort tagName="proxy_out" deviceType="OUT_AFE_PROXY" connection="virtual" role="sink">
             <profile samplingRates="8000 11025 16000 22050 32000 44100 48000 64000 88200 96000 128000 176400 192000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
@@ -221,7 +217,7 @@ SPDX-License-Identifier: BSD-3-Clause-Clear
 
         <route type="mix" sink="line_out" sources="low_latency_out,deep_buffer_out,direct_pcm_out,compress_offload_out,voip_playback,telephony_rx" />
 
-        <route type="mix" sink="hdmi_out" sources="low_latency_out,deep_buffer_out,direct_pcm_out,compress_offload_out,voip_playback" />
+
 
         <route type="mix" sink="proxy_out" sources="low_latency_out,deep_buffer_out,direct_pcm_out,compress_offload_out" />
 
