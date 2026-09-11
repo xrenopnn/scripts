@@ -27,10 +27,6 @@
         <fqname>IRadioNetwork/slot1</fqname>
     </hal>
     <hal format="aidl" override="true">
-        <name>android.hardware.radio.sap</name>
-        <fqname>ISap/slot1</fqname>
-    </hal>
-    <hal format="aidl" override="true">
         <name>android.hardware.radio.sim</name>
         <version>3</version>
         <fqname>IRadioSim/slot1</fqname>
@@ -57,7 +53,6 @@
     </hal>
     <hal format="aidl" override="true">
         <name>vendor.qti.hardware.data.iwlandata</name>
-        <version>2</version>
         <fqname>IIWlan/slot1</fqname>
     </hal>
     <hal format="aidl" override="true">
@@ -79,7 +74,7 @@
     </hal>
     <hal format="aidl" override="true">
         <name>vendor.qti.hardware.radio.qtiradio</name>
-        <version>16</version>
+        <version>13</version>
         <fqname>IQtiRadioStable/slot1</fqname>
     </hal>
     <hal format="aidl" override="true">
