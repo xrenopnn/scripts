@@ -1,38 +1,41 @@
-From 06bcd62a587b01b8f84867595c8d1dfb06c7a223 Mon Sep 17 00:00:00 2001
-From: zaraknyu <razenxizu@gmail.com>
-Date: Fri, 11 Sep 2026 20:53:16 +0000
-Subject: [PATCH 1/4] ImsConfigImpl: Return 0 in getWfcMDN in any case
-
-Signed-off-by: zaraknyu <razenxizu@gmail.com>
-Co-authored-by: Erfan Abdi <erfangplus@gmail.com>
----
- smali/org/codeaurora/ims/ImsConfigImpl.smali | 12 ------------
- 1 file changed, 12 deletions(-)
-
-diff --git a/smali/org/codeaurora/ims/ImsConfigImpl.smali b/smali/org/codeaurora/ims/ImsConfigImpl.smali
-index e737632..b154100 100644
---- a/smali/org/codeaurora/ims/ImsConfigImpl.smali
-+++ b/smali/org/codeaurora/ims/ImsConfigImpl.smali
-@@ -1361,20 +1361,8 @@
-     .locals 2
- 
-     .line 849
--    const-string v0, "wfc_ims_mdn"
--
--    iget-object v1, p0, Lorg/codeaurora/ims/ImsConfigImpl;->mContext:Landroid/content/Context;
--
--    invoke-virtual {p0, p1, v0, v1}, Lorg/codeaurora/ims/ImsConfigImpl;->getSubscriptionProperty(ILjava/lang/String;Landroid/content/Context;)Ljava/lang/String;
--
--    move-result-object p0
--
--    if-nez p0, :cond_0
--
--    .line 851
-     const-string p0, "0"
- 
--    :cond_0
-     return-object p0
- .end method
- 
--- 
-2.43.0
+mkdir -p toolchains
+cd toolchains
+URL="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/tags/android-14.0.0_r33/clang-r510928.tar.gz"
+aria2c \
+    -x16 \
+    -s16 \
+    -k1M \
+    -o clang.tar.gz \
+    "$URL"
+tar -xf clang.tar.gz
+rm clang.tar.gz
+cd ..
+export PATH="$(pwd)/toolchains/bin:${PATH}"
+export TOOLCHAIN_PATH="$(pwd)/bin"
+export LD_LIBRARY_PATH="$(pwd)/lib:${LD_LIBRARY_PATH}"
+export BUILD_CC="$(pwd)/bin/clang"
+export O="${KERNEL_ROOT}/out"
+export ARCH=arm64
+export CROSS_COMPILE=aarch64-linux-gnu-
+export CLANG_TRIPLE=aarch64-linux-gnu-
+export CC="${BUILD_CC}"
+export LLVM=1
+export LLVM_IAS=1
+export AR="${TOOLCHAIN_PATH}/llvm-ar"
+export NM="${TOOLCHAIN_PATH}/llvm-nm"
+export LD="${TOOLCHAIN_PATH}/ld.lld"
+export STRIP="${TOOLCHAIN_PATH}/llvm-strip"
+export OBJCOPY="${TOOLCHAIN_PATH}/llvm-objcopy"
+export OBJDUMP="${TOOLCHAIN_PATH}/llvm-objdump"
+export READELF="${TOOLCHAIN_PATH}/llvm-readelf"
+export HOSTCC="${TOOLCHAIN_PATH}/clang"
+export HOSTCXX="${TOOLCHAIN_PATH}/clang++"
+make -C $(pwd) O=$(pwd)/out KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y gki_defconfig vendor/parrot_perf.config vendor/ext_config/moto-parrot.config vendor/ext_config/moto-parrot-mumba.config
+make -C $(pwd) O=$(pwd)/out KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j$(nproc --all)
+cd ~/android_kernel_motorola_sm6435/out/arch/arm64/boot
+wget -q https://raw.githubusercontent.com/kenway214/GoFile-Upload-Script/master/upload.sh -O ~/gofile && chmod +x ~/gofile
+wget -q https://github.com/Uevo001/magiskboot-linux/raw/refs/heads/main/x86/magiskboot -O magiskboot && chmod +x magiskboot
+wget -q https://gitlab.com/noescape-firmware-dumps/MOTOROLA/mumba_new-1/-/raw/WWAAS36V.48-12-ST12.1/boot.img -O boot.img
+rm -f kernel && mv Image kernel
+./magiskboot repack boot.img
+~/gofile new-boot.img
