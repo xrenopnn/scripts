@@ -1,78 +1,36 @@
-From 648be2c7eae436f7156160a11a7fc2c5536e13fe Mon Sep 17 00:00:00 2001
-From: zaraknyu <razenxizu@gmail.com>
-Date: Fri, 11 Sep 2026 20:55:46 +0000
-Subject: [PATCH 2/4] ImsConfigImpl: don't call setSubscriptionProperty for
- wfc_ims_mdn
+From 874d4beb5ff028c1ad33f4835d76c218bec12d66 Mon Sep 17 00:00:00 2001
+From: Erfan Abdi <erfangplus@gmail.com>
+Date: Sun, 26 Jan 2020 20:23:44 +0330
+Subject: [PATCH 1/4] ImsConfigImpl: Return 0 in getWfcMDN in any case
 
-Co-authored-by: Vachounet <vachounet@live.fr>
-Signed-off-by: zaraknyu <razenxizu@gmail.com>
 ---
- smali/org/codeaurora/ims/ImsConfigImpl.smali | 53 --------------------
- 1 file changed, 53 deletions(-)
+ smali/org/codeaurora/ims/ImsConfigImpl.smali | 12 ------------
+ 1 file changed, 12 deletions(-)
 
 diff --git a/smali/org/codeaurora/ims/ImsConfigImpl.smali b/smali/org/codeaurora/ims/ImsConfigImpl.smali
-index b154100..2dedc85 100644
+index eca7e56..3a02838 100644
 --- a/smali/org/codeaurora/ims/ImsConfigImpl.smali
 +++ b/smali/org/codeaurora/ims/ImsConfigImpl.smali
-@@ -2702,59 +2702,6 @@
-     return v1
+@@ -1361,20 +1361,8 @@
+     .locals 2
  
-     :cond_2
--    if-ne p1, v2, :cond_3
+     .line 850
+-    const-string v0, "wfc_ims_mdn"
 -
--    .line 791
--    new-instance v0, Ljava/lang/StringBuilder;
+-    iget-object v1, p0, Lorg/codeaurora/ims/ImsConfigImpl;->mContext:Landroid/content/Context;
 -
--    const-string v1, "setProvisionedStringValue WIFI_MDN set db value="
+-    invoke-virtual {p0, p1, v0, v1}, Lorg/codeaurora/ims/ImsConfigImpl;->getSubscriptionProperty(ILjava/lang/String;Landroid/content/Context;)Ljava/lang/String;
 -
--    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+-    move-result-object p0
 -
--    invoke-static {p2}, Lcom/qualcomm/ims/utils/Log;->pii(Ljava/lang/Object;)Ljava/lang/String;
+-    if-nez p0, :cond_0
 -
--    move-result-object v1
--
--    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
--
--    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
--
--    move-result-object v0
--
--    invoke-static {p0, v0}, Lcom/qualcomm/ims/utils/Log;->i(Ljava/lang/Object;Ljava/lang/String;)V
--
--    .line 795
--    :try_start_0
--    iget v0, p0, Lorg/codeaurora/ims/ImsConfigImpl;->mSubId:I
--
--    const-string v1, "wfc_ims_mdn"
--
--    invoke-static {v0, v1, p2}, Landroid/telephony/SubscriptionManager;->setSubscriptionProperty(ILjava/lang/String;Ljava/lang/String;)V
--    :try_end_0
--    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
--
--    goto :goto_1
--
--    :catch_0
--    move-exception v0
--
--    .line 798
--    new-instance v1, Ljava/lang/StringBuilder;
--
--    const-string v2, "setSubscriptionProperty fail, e="
--
--    invoke-direct {v1, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
--
--    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
--
--    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
--
--    move-result-object v0
--
--    invoke-static {p0, v0}, Lcom/qualcomm/ims/utils/Log;->e(Ljava/lang/Object;Ljava/lang/String;)V
--
--    :cond_3
--    :goto_1
-     const/4 v5, 0x0
+-    .line 852
+     const-string p0, "0"
  
-     const/4 v6, 0x0
+-    :cond_0
+     return-object p0
+ .end method
+ 
 -- 
 2.43.0
