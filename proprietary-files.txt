@@ -10,10 +10,11 @@ aria2c \
 tar -xf clang.tar.gz
 rm clang.tar.gz
 cd ..
+
 export PATH="$(pwd)/toolchains/bin:${PATH}"
-export TOOLCHAIN_PATH="$(pwd)/bin"
-export LD_LIBRARY_PATH="$(pwd)/lib:${LD_LIBRARY_PATH}"
-export BUILD_CC="$(pwd)/bin/clang"
+export TOOLCHAIN_PATH="$(pwd)/toolchains/bin"
+export LD_LIBRARY_PATH="$(pwd)/toolchains/lib:${LD_LIBRARY_PATH}"
+export BUILD_CC="$(pwd)/toolchains/bin/clang"
 export O="${KERNEL_ROOT}/out"
 export ARCH=arm64
 export CROSS_COMPILE=aarch64-linux-gnu-
@@ -30,12 +31,7 @@ export OBJDUMP="${TOOLCHAIN_PATH}/llvm-objdump"
 export READELF="${TOOLCHAIN_PATH}/llvm-readelf"
 export HOSTCC="${TOOLCHAIN_PATH}/clang"
 export HOSTCXX="${TOOLCHAIN_PATH}/clang++"
+
 make -C $(pwd) O=$(pwd)/out KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y gki_defconfig vendor/parrot_perf.config vendor/ext_config/moto-parrot.config vendor/ext_config/moto-parrot-mumba.config
+
 make -C $(pwd) O=$(pwd)/out KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j$(nproc --all)
-cd ~/android_kernel_motorola_sm6435/out/arch/arm64/boot
-wget -q https://raw.githubusercontent.com/kenway214/GoFile-Upload-Script/master/upload.sh -O ~/gofile && chmod +x ~/gofile
-wget -q https://github.com/Uevo001/magiskboot-linux/raw/refs/heads/main/x86/magiskboot -O magiskboot && chmod +x magiskboot
-wget -q https://gitlab.com/noescape-firmware-dumps/MOTOROLA/mumba_new-1/-/raw/WWAAS36V.48-12-ST12.1/boot.img -O boot.img
-rm -f kernel && mv Image kernel
-./magiskboot repack boot.img
-~/gofile new-boot.img
